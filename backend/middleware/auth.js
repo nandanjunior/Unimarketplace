@@ -34,10 +34,11 @@ exports.isSeller = catchAsyncErrors(async(req,res,next) => {
 
 
 exports.isAdmin = (...roles) => {
-    return (req,res,next) => {
-        if(!roles.includes(req.user.role)){
-            return next(new ErrorHandler(`${req.user.role} can not access this resources!`))
-        };
-        next();
-    }
-}
+    return (req, res, next) => {
+      console.log("User Role:", req.user.role); // Log role for debugging
+      if (!roles.includes(req.user.role)) {
+        return next(new ErrorHandler(`${req.user.role} cannot access this resource!`, 403));
+      }
+      next();
+    };
+  };

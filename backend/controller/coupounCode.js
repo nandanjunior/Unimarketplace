@@ -77,7 +77,7 @@ router.get(
     try {
       const couponCode = await CoupounCode.findOne({ name: req.params.name });
 
-      res.status(200).json({
+      ({
         success: true,
         couponCode,
       });

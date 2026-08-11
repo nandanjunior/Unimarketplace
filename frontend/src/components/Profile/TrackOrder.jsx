@@ -22,18 +22,6 @@ const TrackOrder = () => {
       <>
         {data && data?.status === "Processing" ? (
           <h1 className="text-[20px]">Your Order is processing in shop.</h1>
-        ) : data?.status === "Transferred to delivery partner" ? (
-          <h1 className="text-[20px]">
-            Your Order is on the way for delivery partner.
-          </h1>
-        ) : data?.status === "Shipping" ? (
-          <h1 className="text-[20px]">
-            Your Order is on the way with our delivery partner.
-          </h1>
-        ) : data?.status === "Received" ? (
-          <h1 className="text-[20px]">
-            Your Order is in your city. Our Delivery man will deliver it.
-          </h1>
         ) : data?.status === "On the way" ? (
           <h1 className="text-[20px]">
             Our Delivery man is going to deliver your order.

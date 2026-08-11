@@ -4,7 +4,7 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail");
 const Shop = require("../model/shop");
-const { isAuthenticated, isSeller, isAdmin } = require("../middleware/auth");
+const { isAuthenticated, isSeller } = require("../middleware/auth");
 const cloudinary = require("cloudinary");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ErrorHandler = require("../utils/ErrorHandler");
@@ -39,7 +39,7 @@ router.post("/create-shop", catchAsyncErrors(async (req, res, next) => {
 
     const activationToken = createActivationToken(seller);
 
-    const activationUrl = `https://eshop-tutorial-pyri.vercel.app/seller/activation/${activationToken}`;
+    const activationUrl = `http://localhost:3000/seller/activation/${activationToken}`;
 
     try {
       await sendMail({
@@ -258,53 +258,6 @@ router.put(
       res.status(201).json({
         success: true,
         shop,
-      });
-    } catch (error) {
-      return next(new ErrorHandler(error.message, 500));
-    }
-  })
-);
-
-// all sellers --- for admin
-router.get(
-  "/admin-all-sellers",
-  isAuthenticated,
-  isAdmin("Admin"),
-  catchAsyncErrors(async (req, res, next) => {
-    try {
-      const sellers = await Shop.find().sort({
-        createdAt: -1,
-      });
-      res.status(201).json({
-        success: true,
-        sellers,
-      });
-    } catch (error) {
-      return next(new ErrorHandler(error.message, 500));
-    }
-  })
-);
-
-// delete seller ---admin
-router.delete(
-  "/delete-seller/:id",
-  isAuthenticated,
-  isAdmin("Admin"),
-  catchAsyncErrors(async (req, res, next) => {
-    try {
-      const seller = await Shop.findById(req.params.id);
-
-      if (!seller) {
-        return next(
-          new ErrorHandler("Seller is not available with this id", 400)
-        );
-      }
-
-      await Shop.findByIdAndDelete(req.params.id);
-
-      res.status(201).json({
-        success: true,
-        message: "Seller deleted successfully!",
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));

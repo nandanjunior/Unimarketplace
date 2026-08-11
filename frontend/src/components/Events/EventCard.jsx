@@ -30,19 +30,26 @@ const EventCard = ({ active, data }) => {
         active ? "unset" : "mb-12"
       } lg:flex p-2`}
     >
-      <div className="w-full lg:-w[50%] m-auto">
-        <img src={`${data.images[0]?.url}`} alt="" />
+      <div className="w-full lg:w-[50%] m-auto flex items-center justify-center p-1">
+        <img
+          src={`${data.images[0]?.url}`}
+          alt=""
+          className="w-full h-auto max-h-[370px] object-contain"
+          style={{ padding: "5px"}}
+        />
       </div>
+
+
       <div className="w-full lg:[w-50%] flex flex-col justify-center">
         <h2 className={`${styles.productTitle}`}>{data.name}</h2>
         <p>{data.description}</p>
         <div className="flex py-2 justify-between">
           <div className="flex">
             <h5 className="font-[500] text-[18px] text-[#d55b45] pr-3 line-through">
-              {data.originalPrice}$
+              RM{data.originalPrice}
             </h5>
             <h5 className="font-bold text-[20px] text-[#333] font-Roboto">
-              {data.discountPrice}$
+              RM{data.discountPrice}
             </h5>
           </div>
           <span className="pr-3 font-[400] text-[17px] text-[#44a55e]">
@@ -59,6 +66,12 @@ const EventCard = ({ active, data }) => {
         </div>
       </div>
     </div>
+
+
+
+  
+
+
   );
 };
 
